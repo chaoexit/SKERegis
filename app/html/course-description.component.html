@@ -1,0 +1,8 @@
+<h2>Course description</h2>
+<div *ngIf="courses">
+	<ul>
+		<li *ngFor="let course of courses">
+			{{course.id}} -> {{course.name.en}}
+		</li>
+	</ul>
+</div>
