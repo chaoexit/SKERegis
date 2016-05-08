@@ -7,51 +7,55 @@ import { SearchPipe } from './search-pipe';
 	selector: 'my-course-description',
 	pipes: [SearchPipe],
 	templateUrl: 'app/html/course-description.component.html',
-    providers: [CourseService],
     directives: [Collapse]
 })
 export class CourseDescriptionComponent implements OnInit {
 	data;
 	courses = [];
+	enrolledCourses = [];
 	@Input()
 	tempCourses = [];
+	@Input()
+	studentID = '';
 	collapseList: Map<boolean> = {};
 	enrollButton = 'Enroll';
 
 	ngOnInit() {
-		this.cService.getCourses().then(data => {
+		this.cService.getAllCourses().then(data => {
 			this.data = data;
 			for (var x in data) {
-				console.log(data[x].id);
+				data[x].collapse = true;
+				data[x].collapse2 = true;
 				this.courses.push(data[x]);
-				this.collapseList[data[x].id] = true;
 			}
+		});
+		this.cService.getCourseByID(this.studentID).then(data => {
+			this.enrolledCourses = data;
 		});
 	}
 
 	constructor(private cService: CourseService) {
 	}
 
-	requestForEnrollment(course: Object) {
-		console.log('enroll!!');
-		// let index = this.tempCourses.indexOf(course);
-		// if ( index != -1 ) {
-		// 	this.tempCourses.splice(index, 1);
-		// }
+	requestForEnrollment(course) {
 		if (this.tempCourses.indexOf(course) != -1) {
 			alert('Can\'t enroll same course multiple times');
 		} else {
+			course.collapse = true;
+			course.collapse2 = true;
 			this.tempCourses.push(course)
 		}
 	}
 
 	checkDisableEnrollButton(course: Object) : boolean {
-		if ( this.tempCourses.indexOf(course) != -1 ) {
+		console.log(this.enrolledCourses);
+		if ( this.tempCourses.indexOf(course) != -1 || this.enrolledCourses.indexOf(course) != -1 ) {
 			this.enrollButton = 'Enrolled';
+			return true;
 		} else {
 			this.enrollButton = 'Enroll';
+			return false;
 		}
-		return this.tempCourses.indexOf(course) != -1
 	}
 
 }

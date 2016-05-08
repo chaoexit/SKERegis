@@ -1,26 +1,31 @@
-
 <div class="row">
     <div class="col-sm-7 col-md-7 col-lg-7">
-        <my-course-description [tempCourses]="enrollList"></my-course-description>
+        <my-course-description [tempCourses]="enrollList" [studentID]="studentID"></my-course-description>
     </div>
-    <div class="col-sm-5 col-md-5 col-lg-5">
-        <div *ngIf="enrollList" style="width: 100%; margin: 0px auto;">
-            <center><h2>Enrollment</h2></center>
+    <div class="col-sm-5 col-md-5 col-lg-5 well">
+        <center><h2>Enrollment</h2></center>
+        <div *ngIf="enrollList">
             <ul style="list-style: none;">   
                 <li *ngFor="let course of enrollList">
-                    <button type="button" class="btn btn-primary" style="width:100%"
-                    (click)="collapseList[course.id] = !collapseList[course.id]">{{course.id}} : {{course.name.en}}
+                <div class="row">
+                    <button type="button" class="btn btn-danger" (click)="removeCourse(course);">Remove</button>
+                    <button type="button" class="btn btn-primary" style="width:80%"
+                    (click)="course.collapse2 = !course.collapse2">{{course.id}} : {{course.name.en}}
                     </button>
+                </div>
                     <br>
                     <br>
-                    <div [collapse]="collapseList[course.id]" class="card card-block card-header">
+                    <div [collapse]="course.collapse2" class="card card-block card-header">
                         <div class="well well-lg">
                             {{course.description.en}}
                         </div>
                     </div>
-                    <button type="button" class="btn btn-danger" (click)="removeCourse(course);">Remove</button>
                 </li>
             </ul>
+            <div *ngIf="enrollList.length > 0" class="row" style="text-align: center;">
+                <button type="button" class="btn btn-success" (click)="enroll();">Confirm</button>
+                <button type="button" class="btn btn-warning" (click)="discard();">Discard</button>
+            </div>
         </div>
     </div>
 </div>

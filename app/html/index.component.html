@@ -1,5 +1,5 @@
 <center><h2>Courses</h2></center>
-<div *ngIf="courses" style="width: 100%; margin: 0px auto;">
+<div *ngIf="courses" style="width: 70%; margin: 0px auto;">
 	<ul style="list-style: none;">
 		<div class=”row” style="width:100%">
     		<div>
@@ -8,19 +8,10 @@
         </div>    
 		<br>
 		<li *ngFor="let course of courses | search:listFilter.value">
-            <div class="row">
-                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-right: 0px;">
-                <button type="button" class="btn btn-primary"
-                        (click)="requestForEnrollment(course);"
-                        [disabled]="checkDisableEnrollButton(course)">{{enrollButton}}
-                </button>
-                </div>
-                <div class="col-sm-10 col-md-10 col-lg-10" style="padding-left: 0px;">
                 <button title="{{course.name.en}}" type="button" class="btn btn-info" style="width:100%; text-align: left;"
                         (click)="course.collapse = !course.collapse">{{course.id}} : {{course.name.en}}
                 </button>
-                </div>
-            </div>
+            <br>
             <br>
             <div [collapse]="course.collapse" class="card card-block card-header">
                 <div class="well well-lg">

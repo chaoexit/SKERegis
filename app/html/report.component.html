@@ -1,0 +1,25 @@
+<div *ngIf="!studentID">
+    <center><h2>Please log in first</h2></center>
+</div>
+<div *ngIf="studentID.length == 10">
+<div *ngIf="enrolledList" style="width: 100%; margin: 0px auto;">
+    <div class="well"><center><h2>Enrollment Report</h2></center>
+        <div *ngIf="enrolledList.length == 0">
+            <center><h3>You haven't enrolled any courses</h3></center>
+        </div>
+	    <ul style="list-style: none;">   
+            <li *ngFor="let course of enrolledList">
+            <div class="row">
+                <button title="{{course.name.en}}" type="button" class="btn btn-info" style="width:100%; text-align: left;">
+                {{course.id}} : {{course.name.en}}
+                </button>
+            </div>
+            <br>
+            </li>
+        </ul>
+        <div style="text-align: center;">
+        Total enrolled credits : {{allCredit}}
+        </div>
+    </div>
+</div>
+</div>

@@ -8,16 +8,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">SKE Registration</a>
+      <a class="navbar-brand" [routerLink]="['Index']">SKE Registration</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Enrollment<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Report</a></li>
+        <li [class.active]="router.isRouteActive(router.generate(['/Index']))"><a [routerLink]="['Index']">Index</a></li>
+        <li [class.active]="router.isRouteActive(router.generate(['/Enrollment', { id: studentID }]))"><a (click)="gotoEnrollment()">Enrollment</a></li>
+        <li [class.active]="router.isRouteActive(router.generate(['Report', { id: studentID }]))"><a (click)="gotoReport()">Report</a></li>
       </ul>
+      <form class="navbar-form navbar-right" role="search" [hidden]="checkLogin()">
+        <div class="form-group">
+          <input #studentID type="text" class="form-control" placeholder="10 Digits student-ID">
+        </div>
+        <button type="submit" class="btn btn-default" (click)="login(studentID.value)">Login</button>
+      </form>
+      <a class="navbar-brand navbar-right" [hidden]="!checkLogin()">Logged in as : {{studentID.value}}</a>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<my-enrollment></my-enrollment>
+<router-outlet></router-outlet>
