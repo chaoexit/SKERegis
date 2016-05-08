@@ -1,23 +1,16 @@
 import { Component } from '@angular/core';
 import { CourseService } from './course.service';
-import { CourseDescription } from './course-description.component';
+import { EnrollmentComponent } from './enrollment.component';
 
 
 @Component({
 	selector: 'my-app',
-	template: 
-	`
-		<h5>{{title}}</h5>
-		<my-course-description></my-course-description>
-    `,
-    directives: [CourseDescription],
+	templateUrl: 'app/html/app.component.html',
+    directives: [EnrollmentComponent],
     providers: [CourseService]
 })
 
 export class AppComponent {
-	title = 'SKE Registration';
-	data;
-	courses = [];
 
 	constructor() {
 	}

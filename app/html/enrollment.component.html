@@ -1,0 +1,26 @@
+
+<div class="row">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <my-course-description [tempCourses]="enrollList"></my-course-description>
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5">
+        <div *ngIf="enrollList" style="width: 100%; margin: 0px auto;">
+            <center><h2>Enrollment</h2></center>
+            <ul style="list-style: none;">   
+                <li *ngFor="let course of enrollList">
+                    <button type="button" class="btn btn-primary" style="width:100%"
+                    (click)="collapseList[course.id] = !collapseList[course.id]">{{course.id}} : {{course.name.en}}
+                    </button>
+                    <br>
+                    <br>
+                    <div [collapse]="collapseList[course.id]" class="card card-block card-header">
+                        <div class="well well-lg">
+                            {{course.description.en}}
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" (click)="removeCourse(course);">Remove</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
