@@ -9,8 +9,9 @@
         </div>
 	    <ul style="list-style: none;">   
             <li *ngFor="let course of enrolledList">
-            <div class="row">
-                <button title="{{course.name.en}}" type="button" class="btn btn-info" style="width:100%; text-align: left;">
+            <div class="row" align="center">
+                <button type="button" class="btn btn-danger" (click)="dropCourse(course);" [disabled]="isDropping">Drop</button>
+                <button title="{{course.name.en}}" type="button" class="btn btn-info" style="width:80%; text-align: left;">
                 {{course.id}} : {{course.name.en}}
                 </button>
             </div>
@@ -18,8 +19,12 @@
             </li>
         </ul>
         <div style="text-align: center;">
-        Total enrolled credits : {{allCredit}}
+        <label>Total enrolled credits : {{allCredit}}</label><br>
+        <button type="button" class="btn btn-success" (click)="viewJSON();">View JSON</button>
         </div>
+    </div>
+    <div *ngIf="showJSON" class="well">
+        {{textJSON}}
     </div>
 </div>
 </div>

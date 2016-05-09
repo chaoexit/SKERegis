@@ -15,8 +15,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li [class.active]="router.isRouteActive(router.generate(['/Index']))"><a [routerLink]="['Index']">Index</a></li>
-        <li [class.active]="router.isRouteActive(router.generate(['/Enrollment', { id: studentID }]))"><a (click)="gotoEnrollment()">Enrollment</a></li>
-        <li [class.active]="router.isRouteActive(router.generate(['Report', { id: studentID }]))"><a (click)="gotoReport()">Report</a></li>
+        <li [class.active]="router.isRouteActive(router.generate(['/Enrollment']))"><a [routerLink]="['Enrollment']">Enrollment</a></li>
+        <li [class.active]="router.isRouteActive(router.generate(['/Report']))"><a [routerLink]="['Report']">Report</a></li>
       </ul>
       <form class="navbar-form navbar-right" role="search" [hidden]="checkLogin()">
         <div class="form-group">

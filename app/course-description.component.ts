@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CourseService } from './course.service'
 import { Collapse } from './collapse.component';
 import { SearchPipe } from './search-pipe';
+import { SingletonService } from './singleton.service';
 
 @Component({
 	selector: 'my-course-description',
@@ -15,23 +16,12 @@ export class CourseDescriptionComponent implements OnInit {
 	enrolledCourses = [];
 	@Input()
 	tempCourses = [];
-	@Input()
-	studentID = '';
 	collapseList: Map<boolean> = {};
 	enrollButton = 'Enroll';
 
 	ngOnInit() {
-		this.cService.getAllCourses().then(data => {
-			this.data = data;
-			for (var x in data) {
-				data[x].collapse = true;
-				data[x].collapse2 = true;
-				this.courses.push(data[x]);
-			}
-		});
-		this.cService.getCourseByID(this.studentID).then(data => {
-			this.enrolledCourses = data;
-		});
+		this.courses = SingletonService.getInstance().getCourseList();
+		this.enrolledCourses = SingletonService.getInstance().getEnrolledList();
 	}
 
 	constructor(private cService: CourseService) {
@@ -47,12 +37,18 @@ export class CourseDescriptionComponent implements OnInit {
 		}
 	}
 
-	checkDisableEnrollButton(course: Object) : boolean {
-		console.log(this.enrolledCourses);
-		if ( this.tempCourses.indexOf(course) != -1 || this.enrolledCourses.indexOf(course) != -1 ) {
+	checkDisableEnrollButton(course) : boolean {
+		// console.log(this.enrolledCourses);
+		if ( this.tempCourses.indexOf(course) != -1) {
 			this.enrollButton = 'Enrolled';
 			return true;
 		} else {
+			for (var i = 0; i < this.enrolledCourses.length; i++) {
+				if ( this.enrolledCourses[i].id == course.id) {
+					this.enrollButton = 'Enrolled';
+					return true;
+				}
+			}
 			this.enrollButton = 'Enroll';
 			return false;
 		}

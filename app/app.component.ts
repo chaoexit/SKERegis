@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { Http } from '@angular/http';
 import { EnrollmentComponent } from './enrollment.component';
 import { ReportComponent } from './report.component';
 import { CourseService } from './course.service';
 import { Router, RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { IndexComponent } from './index.component';
+import { SingletonService } from './singleton.service';
 
 
 @Component({
@@ -20,20 +22,30 @@ import { IndexComponent } from './index.component';
 			useAsDefault: true
 		},	
 		{
-			path: '/enrollment/:id',
+			path: '/enrollment',
 			name: 'Enrollment',
 			component: EnrollmentComponent,
 		},
 		{
-			path: '/report/:id',
+			path: '/report',
 			name: 'Report',
 			component: ReportComponent
 		}
 	])
 export class AppComponent {
 	studentID = 'id';
-	constructor(private router: Router) {
-
+	subscriber: any;
+	constructor(private router: Router, private http: Http) {
+		SingletonService.initialize(http);
+		this.subscriber = SingletonService.getInstance().emitter.subscribe(data => {
+			if (data == 2) {
+				let link = ['Enrollment'];
+				this.router.navigate(link);
+				this.subscriber.unsubscribe();
+			} else if (data == -1) {
+				alert('Failed to login, please try again');
+			}
+		});
 	}
 
 	login(input) {
@@ -41,26 +53,15 @@ export class AppComponent {
 			alert("Please fill in 10 digits student id");
 		} else {
 			this.studentID = input;
-			let link = ['Enrollment', { id: this.studentID }];
-			this.router.navigate(link);
+			SingletonService.getInstance().setStudentID(input);
 		}
 	}
 
 	checkLogin() {
-		if ( this.studentID.length == 10) {
+		if ( SingletonService.getInstance().getStudentID().length == 10 ) {
 			return true;
 		} else {
 			return false;
 		}
-	}
-
-	gotoReport() {
-		let link = ['Report', { id: this.studentID }];
-		this.router.navigate(link);
-	}
-
-	gotoEnrollment() {
-		let link = ['Enrollment', { id: this.studentID }];
-		this.router.navigate(link);
 	}
 }

@@ -7,17 +7,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class CourseService {
 	courseData;
-	studentID;
 
 	constructor(private http: Http) {
-	}
-
-	getStudentID() {
-		return this.studentID;
-	}
-
-	setStudentID(input) {
-		this.studentID = input;
 	}
 
 	getAllCourses() {
