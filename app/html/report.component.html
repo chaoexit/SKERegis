@@ -11,9 +11,7 @@
             <li *ngFor="let course of enrolledList">
             <div class="row" align="center">
                 <button type="button" class="btn btn-danger" (click)="dropCourse(course);" [disabled]="isDropping">Drop</button>
-                <button title="{{course.name}}" type="button" class="btn btn-info" style="width:80%; text-align: left;">
-                {{course.id}} : {{course.name}}
-                </button>
+                <span class="label label-info" style="text-align: left; display: inline-block; font-size: 1.25em; width: 60%;" title="{{course.name}}">{{course.id}} : {{course.name}}</span>
             </div>
             <br>
             </li>
