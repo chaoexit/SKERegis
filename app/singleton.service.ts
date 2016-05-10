@@ -16,6 +16,22 @@ export class SingletonService {
 			throw new Error("Use getInstance() instead");
 		}
 		this.myHttp = http;
+		this.myHttp.get('https://raw.githubusercontent.com/chinclubi/HCI-webapplication/master/assets/courses.json').subscribe(data => {
+			if (data.status == 200) {
+				var tempData = data.json();
+				for (var x = 0; x < tempData.length; x++) {
+					tempData[x].collapse = true;
+					tempData[x].collapse2 = true;
+					if (tempData[x].sections && tempData[x].sections.length == 2 ) {
+						console.log(tempData[x]);
+					}
+					this.courseList.push(tempData[x]);
+				}
+				this.emitter.next(++this.checkList);
+			} else {
+				this.emitter.next(-1);
+			}
+		});
 	}
 
 	static getInstance() {
@@ -40,19 +56,6 @@ export class SingletonService {
 	}
 
 	private initializeService() {
-		this.myHttp.get('https://whsatku.github.io/skecourses/combined.json').subscribe(data => {
-			if (data.status == 200) {
-				var tempData = data.json();
-				for (var x in tempData) {
-					tempData[x].collapse = true;
-					tempData[x].collapse2 = true;
-					this.courseList.push(tempData[x]);
-				}
-				this.emitter.next(++this.checkList);
-			} else {
-				this.emitter.next(-1);
-			}
-		});
 		this.myHttp.get('http://52.37.98.127:3000/v1/5610546745/?pin=6745').subscribe(data => {
 			if (data.status == 200) {
 				if ( !data.json()[this.studentID] ) {
@@ -96,5 +99,9 @@ export class SingletonService {
 				this.emitter.next(-1);
 			}
 		});	
+	}
+
+	speak(input) {
+		this.emitter.next(input);
 	}
 }

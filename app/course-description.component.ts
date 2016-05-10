@@ -34,6 +34,7 @@ export class CourseDescriptionComponent implements OnInit {
 			course.collapse = true;
 			course.collapse2 = true;
 			this.tempCourses.push(course)
+			SingletonService.getInstance().speak(99);
 		}
 	}
 

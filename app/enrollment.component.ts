@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseDescriptionComponent } from './course-description.component';
 import { Collapse } from './collapse.component';
-import { CourseService } from './course.service';
 import { RouteParams, Router } from '@angular/router-deprecated';
 import { SingletonService } from './singleton.service';
 
@@ -32,7 +31,7 @@ export class EnrollmentComponent implements OnInit{
 		}
 	}
 
-	constructor(private cService: CourseService, private router: Router, private routeParams: RouteParams) {
+	constructor(private router: Router, private routeParams: RouteParams) {
 		this.subscriber = SingletonService.getInstance().emitter.subscribe(data => {
 			if (data == 9) {
 				console.log("success");
@@ -40,6 +39,8 @@ export class EnrollmentComponent implements OnInit{
 				this.subscriber.unsubscribe();
 				let link = ['Report'];
 				this.router.navigate(link);
+			} else if ( data == 99 ) {
+				this.jsonText = JSON.stringify(this.enrollList, null, ' ');
 			} else if ( data == -9 ) {
 				alert('Failed to enroll, try again later');
 				let link = ['Enrollment'];
@@ -53,7 +54,10 @@ export class EnrollmentComponent implements OnInit{
 		let index = this.enrollList.indexOf(course);
 		if ( index != -1 ) {
 			this.enrollList.splice(index, 1);
-			this.jsonText = JSON.stringify(this.enrollList);
+			this.jsonText = JSON.stringify(this.enrollList, null, ' ');
+			if (this.enrollList.length == 0) {
+				this.showJSON = false;
+			}
 		}
 	}
 
@@ -77,7 +81,8 @@ export class EnrollmentComponent implements OnInit{
 	}
 
 	viewJSON() {
-		this.jsonText = JSON.stringify(this.enrollList);
+		this.jsonText = JSON.stringify(this.enrollList, null, ' ');
+		console.log(this.jsonText);
 		this.showJSON = !this.showJSON;
 	}
 }

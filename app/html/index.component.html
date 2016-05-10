@@ -8,8 +8,8 @@
         </div>    
 		<br>
 		<li *ngFor="let course of courses | search:listFilter.value">
-                <button title="{{course.name.en}}" type="button" class="btn btn-info" style="width:100%; text-align: left;"
-                        (click)="course.collapse = !course.collapse">{{course.id}} : {{course.name.en}}
+                <button title="{{course.name}}" type="button" class="btn btn-info" style="width:100%; text-align: left;"
+                        (click)="course.collapse = !course.collapse">{{course.id}} : {{course.name}}
                 </button>
             <br>
             <br>
@@ -17,7 +17,7 @@
                 <div class="well well-lg">
                 Credits : {{course.credit.total}} <br>
                 	Description : <br>
-                    <p style="text-indent: 3em;">{{course.description.en}}</p>
+                    <p style="text-indent: 3em;">{{course.description}}</p>
                 </div>
             </div>
 		</li>

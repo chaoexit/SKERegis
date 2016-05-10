@@ -41,6 +41,10 @@ export class ReportComponent implements OnInit{
 					for (var i = 0; i < this.enrolledList.length; i++) {
 						this.allCredit += this.enrolledList[i].credit.total;
 					}
+					this.textJSON = JSON.stringify(this.enrolledList, null, ' ');
+					if (this.enrolledList.length  == 0) {
+						this.showJSON = false;
+					}	
 				});
 			} else if ( data == -10 ) {
 				alert('Something went wrong, try again later');
@@ -62,7 +66,7 @@ export class ReportComponent implements OnInit{
 	}
 
 	viewJSON() {
-		this.textJSON = JSON.stringify(this.enrolledList);
+		this.textJSON = JSON.stringify(this.enrolledList, null, ' ');
 		this.showJSON = !this.showJSON;
 	}
 }

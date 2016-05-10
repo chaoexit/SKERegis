@@ -3,8 +3,8 @@
         <my-course-description [tempCourses]="enrollList" [studentID]="studentID"></my-course-description>
     </div>
     <div class="col-sm-5 col-md-5 col-lg-5">
-    <div *ngIf="showJSON" class="well">
-        {{jsonText}}
+    <div *ngIf="showJSON" class="well" style="height: 300px; overflow-y: scroll;">
+        <pre>{{jsonText}}</pre>
     </div>
     <div class="well" align="center">
         <center><h2>Enrollment</h2></center>
@@ -20,14 +20,16 @@
                 <div class="row">
                     <button type="button" class="btn btn-danger" (click)="removeCourse(course);">Remove</button>
                     <button type="button" class="btn btn-primary" style="width:80%"
-                    (click)="course.collapse2 = !course.collapse2">{{course.id}} : {{course.name.en}}
+                    (click)="course.collapse2 = !course.collapse2">{{course.id}} : {{course.name}}
                     </button>
                 </div>
                     <br>
                     <br>
                     <div [collapse]="course.collapse2" class="card card-block card-header">
-                        <div class="well well-lg">
-                            {{course.description.en}}
+                        <div class="well well-lg" style="text-align: left;">
+                        Credits : {{course.credit.total}} <br>
+                        Description : <br>
+                        <p style="text-indent: 3em;">{{course.description}}</p>
                         </div>
                     </div>
                 </li>

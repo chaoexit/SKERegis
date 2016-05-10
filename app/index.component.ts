@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseService } from './course.service'
 import { Collapse } from './collapse.component';
 import { SearchPipe } from './search-pipe';
+import { SingletonService } from './singleton.service';
 
 @Component({
 	selector: 'my-index',
@@ -15,16 +15,10 @@ export class IndexComponent implements OnInit {
 	collapseList: Map<boolean> = {};
 
 	ngOnInit() {
-		this.cService.getAllCourses().then(data => {
-			this.data = data;
-			for (var x in data) {
-				data[x].collapse = true;
-				this.courses.push(data[x]);
-			}
-		});
+		this.courses = SingletonService.getInstance().getCourseList();
 	}
 
-	constructor(private cService: CourseService) {
+	constructor() {
 	}
 
 
