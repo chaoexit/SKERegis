@@ -22,9 +22,6 @@ export class SingletonService {
 				for (var x = 0; x < tempData.length; x++) {
 					tempData[x].collapse = true;
 					tempData[x].collapse2 = true;
-					if (tempData[x].sections && tempData[x].sections.length == 2 ) {
-						console.log(tempData[x]);
-					}
 					this.courseList.push(tempData[x]);
 				}
 				this.emitter.next(++this.checkList);
