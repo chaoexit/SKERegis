@@ -2,7 +2,10 @@
   "name": "SKERegis",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsc && concurrently \"./node_modules/http-server/bin/httpserver\" "
+    "start": "tsc && concurrently \"npm run tsc:w\" \"./node_modules/http-server/bin/http-server\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
   },
   "license": "ISC",
   "dependencies": {
