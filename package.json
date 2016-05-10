@@ -28,7 +28,6 @@
     "systemjs": "0.19.27",
     "zone.js": "^0.6.12",
     "concurrently": "^2.0.0",
-    "lite-server": "^2.2.0",
     "typescript": "^1.8.10"
   },
   "devDependencies": {
